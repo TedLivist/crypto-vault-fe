@@ -23,8 +23,8 @@ export const timeDiff = (curr, prev) => {
   
           // If the diff is less then milliseconds in a year
       } else if (diff < ms_Yr) {
-          return 'Around ' + Math.round(diff / ms_Mon) + ' months ago';
+          return 'around ' + Math.round(diff / ms_Mon) + ' months ago';
       } else {
-          return 'Around ' + Math.round(diff / ms_Yr) + ' years ago';
+          return 'around ' + Math.round(diff / ms_Yr) + ' years ago';
       }
   }
