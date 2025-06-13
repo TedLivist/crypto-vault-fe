@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { timeDiff } from "../../utils/timeCalculation";
+import RequestWithdrawal from "./RequestWithdrawal";
 
 const Home = (props) => {
 
@@ -8,6 +9,8 @@ const Home = (props) => {
   const [delay, setDelay] = useState("")
   const [owners, setOwners] = useState([])
   const [reqConfirmations, setReqConfirmations] = useState(0)
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = async () => {
     const cont = Number(await contract.lastWithdrawal());
@@ -28,8 +31,10 @@ const Home = (props) => {
     ]).then((values) => {
       setOwners(values);
     })
-    
+  }
 
+  const handleModal = () => {
+    setIsOpen(!isOpen);
   }
 
   return (
@@ -54,6 +59,9 @@ const Home = (props) => {
         <p>{owners[2]}</p>
         <p>{owners[3]}</p>
       </div>
+
+      <button onClick={handleModal}>Request withdrawal</button>
+      <RequestWithdrawal isOpen={isOpen} handleModal={handleModal} />
 
       <div>
         {console.log(owners)}
