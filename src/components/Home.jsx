@@ -13,6 +13,7 @@ const Home = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = async () => {
+    console.log(contract)
     const cont = Number(await contract.lastWithdrawal());
     const time = (timeDiff(Date.now(), (cont * 1000)))
     setLastWithdrawal(time);
@@ -61,7 +62,7 @@ const Home = (props) => {
       </div>
 
       <button onClick={handleModal}>Request withdrawal</button>
-      <RequestWithdrawal isOpen={isOpen} handleModal={handleModal} />
+      <RequestWithdrawal isOpen={isOpen} handleModal={handleModal} contract={contract} signer={signer} />
 
       <div>
         {console.log(owners)}

@@ -4,7 +4,9 @@ import Home from './components/Home'
 
 import { ethers } from 'ethers';
 import { contractABI, contractAddress } from '../utils/contractDetails';
-import { timeDiff } from '../utils/timeCalculation';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Transactions from './components/Transactions';
 
 function App() {
 
@@ -33,12 +35,15 @@ function App() {
   }, [])
   
   return (
-    <>
-      <Home
-        contract={contract}
-        signer={signer}
-      />
-    </>
+    // <Home contract={contract} signer={signer} />
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route exact path="/" element={<Home contract={contract} signer={signer} />} />
+
+        <Route exact path="/transactions" element={<Transactions contract={contract} signer={signer} />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
