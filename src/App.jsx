@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useMemo, useState } from 'react';
 import './App.css'
 import Home from './components/Home'
 
@@ -7,6 +7,8 @@ import { contractABI, contractAddress } from '../utils/contractDetails';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Transactions from './components/Transactions';
+
+export const Web3Context = createContext()
 
 function App() {
 
@@ -33,17 +35,24 @@ function App() {
 
     connectWallet()
   }, [])
+
+  const webContextValue = useMemo(() => 
+    ({ contract, signer }),
+    [contract, signer]
+  )
   
   return (
     // <Home contract={contract} signer={signer} />
+    <Web3Context.Provider value={webContextValue}>
     <BrowserRouter>
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Home contract={contract} signer={signer} />} />
 
-        <Route exact path="/transactions" element={<Transactions contract={contract} signer={signer} />} />
+        <Route exact path="/transactions" element={<Transactions />} />
       </Routes>
     </BrowserRouter>
+    </Web3Context.Provider>
   )
 }
 
