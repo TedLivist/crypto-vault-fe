@@ -1,11 +1,22 @@
 import { ethers } from "ethers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const RequestWithdrawal = (props) => {
   const { isOpen, handleModal, contract } = props;
 
   const [recipientAddress, setRecipientAddress] = useState("")
   const [txValue, setTxValue] = useState(0);
+  const [error, setError] = useState("")
+
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError("");
+      }, 5000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +38,8 @@ const RequestWithdrawal = (props) => {
       console.log(tx.hash)
       console.log(tx)
     } catch (e) {
-      console.error(e)
+      console.error(e.reason)
+      setError(e.reason)
     }
 
   }
@@ -60,11 +72,15 @@ const RequestWithdrawal = (props) => {
 
               <br />
               <button>Queue withdrawal</button>
+              {(error) && (
+                <p style={{color: 'red'}}>{error}</p>
+              )}
             </form>
 
             <button onClick={handleModal}>xx</button>
           </div>
         </div>
+
       )}
     </>
   );

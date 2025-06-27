@@ -1,13 +1,26 @@
 import { ethers } from "ethers";
 import { timeDiff } from "../../utils/timeCalculation";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Transaction = (props) => {
-
   const {
     to, txValue, confirmations, executed, timeExecuted,
     contract, index
   } = props
-
+  
+  const [error, setError] = useState("")
+  
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError("");
+      }, 5000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
+  
   const handleConfirmation = async () => {
     try {
       if (!contract.runner) {
@@ -19,11 +32,13 @@ const Transaction = (props) => {
       console.log(tx.hash)
       console.log(tx)
     } catch (e) {
-      console.error(e)
+      console.error(e.reason)
+      setError(e.reason)
     }
   }
 
   const handleExecution = async () => {
+    setError("")
     try {
       if (!contract.runner) {
         console.error("Invalid signer!")
@@ -34,7 +49,8 @@ const Transaction = (props) => {
       console.log(tx.hash)
       console.log(tx)
     } catch (e) {
-      console.error(e)
+      console.error(e.reason)
+      setError(e.reason)
     }
   }
 
@@ -71,8 +87,11 @@ const Transaction = (props) => {
         <p>Transaction has been executed</p>
       )}
 
+      {(error) && (
+        <p style={{color: 'red'}}>{error}</p>
+      )}
     </div>
   );
 }
- 
+
 export default Transaction;
