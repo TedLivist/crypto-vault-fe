@@ -36,6 +36,27 @@ function App() {
     connectWallet()
   }, [])
 
+  // listen for wallet changes and update signer
+  useEffect(() => {
+    if (window.ethereum) {
+      const handleAccountsChanged = async (accounts) => {
+        if (accounts.length === 0) {
+          setSigner(null);
+        } else {
+          setSigner(accounts[0]);
+        }
+      };
+
+      // Add event listener for account changes
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+
+      // Cleanup listener on component unmount
+      return () => {
+        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+      };
+    }
+  }, []);
+
   const webContextValue = useMemo(() => 
     ({ contract, signer }),
     [contract, signer]
