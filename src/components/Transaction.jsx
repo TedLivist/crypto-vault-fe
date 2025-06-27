@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+import { timeDiff } from "../../utils/timeCalculation";
 
 const Transaction = (props) => {
 
@@ -35,6 +36,16 @@ const Transaction = (props) => {
       {confirmations}
       -------------
       {timeExecuted}
+      {(timeExecuted <= 0) && (
+        <div>
+          not executed yet
+        </div>
+      )}
+      {(timeExecuted > 0) && (
+        <div>
+          {timeDiff(Date.now(), (Number(timeExecuted) * 1000))}
+        </div>
+      )}
       -------------
       {ethers.formatEther(Number(txValue).toString())}
       <br/>
@@ -43,7 +54,11 @@ const Transaction = (props) => {
       )}
 
       {(!executed && Number(confirmations) >= 3) && (
-        <button onClick={handleExecution}>Eexcute Transaction</button>
+        <button onClick={handleExecution}>Execute Transaction</button>
+      )}
+
+      {(executed) && (
+        <p>Transaction has been executed</p>
       )}
 
     </div>
