@@ -30,7 +30,9 @@ const Transactions = (props) => {
       {transactions.length > 0 && (
         transactions.map((transaction, index) => (
           <Transaction
+            contract={contract}
             key={index}
+            index={index}
             to={transaction.to}
             txValue={transaction.txValue}
             executed={transaction.executed}
