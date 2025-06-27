@@ -34,7 +34,7 @@ const Home = (props) => {
     }
 
     initializeVariables()
-  }, [contract])
+  }, [contract, signer])
 
   const handleModal = () => {
     setIsOpen(!isOpen);
