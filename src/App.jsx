@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import Transactions from './components/Transactions';
 
 export const Web3Context = createContext()
+const provider = new ethers.BrowserProvider(window.ethereum);
 
 function App() {
 
@@ -17,7 +18,6 @@ function App() {
 
   useEffect(() => {
     const connectWallet = async () => {
-      const provider = new ethers.BrowserProvider(window.ethereum);
       await provider.send("eth_requestAccounts", []);
 
       const initSigner = await provider.getSigner();
@@ -43,7 +43,11 @@ function App() {
         if (accounts.length === 0) {
           setSigner(null);
         } else {
-          setSigner(accounts[0]);
+          // reconstruct the contract too after changing the signer
+          // so that errors do not carry over to the new signer
+          const initSigner = await provider.getSigner();
+          setSigner(initSigner)
+          setContract(new ethers.Contract(contractAddress, contractABI, initSigner));
         }
       };
 

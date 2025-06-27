@@ -2,11 +2,8 @@ import { useContext, useEffect, useState } from "react"
 import Transaction from "./Transaction"
 import { Web3Context } from "../App"
 
-const Transactions = (props) => {
-
-  // const { contract, signer } = props
-
-  const { contract, signer } = useContext(Web3Context)
+const Transactions = () => {
+  const { contract } = useContext(Web3Context)
 
   const [transactions, setTransactions] = useState([])
   const [transactionsCount, setTransactionsCount] = useState(0)

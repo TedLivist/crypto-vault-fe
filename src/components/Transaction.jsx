@@ -24,7 +24,18 @@ const Transaction = (props) => {
   }
 
   const handleExecution = async () => {
-    console.log("Haha, execute")
+    try {
+      if (!contract.runner) {
+        console.error("Invalid signer!")
+      }
+
+      const tx = await contract.executeTransaction(index)
+
+      console.log(tx.hash)
+      console.log(tx)
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   return (
@@ -35,7 +46,6 @@ const Transaction = (props) => {
       -------------
       {confirmations}
       -------------
-      {timeExecuted}
       {(timeExecuted <= 0) && (
         <div>
           not executed yet
