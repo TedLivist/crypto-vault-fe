@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import { useState } from "react";
 
 const RequestWithdrawal = (props) => {
-  const { isOpen, handleModal, contract, signer } = props;
+  const { isOpen, handleModal, contract } = props;
 
   const [recipientAddress, setRecipientAddress] = useState("")
   const [txValue, setTxValue] = useState(0);
