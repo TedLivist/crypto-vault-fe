@@ -79,9 +79,3 @@
     padding: 1rem 3rem;
   }
 }
-
-/* Ensure body content doesn't get hidden behind fixed navbar */
-/* Add this to your main CSS file or component */
-body {
-  padding-top: 80px; /* Adjust based on navbar height */
-}
