@@ -23,8 +23,10 @@ const Transactions = () => {
 
   return (
     <>
-      Transactions go here!
-      <div>Total transactions: {transactionsCount}</div>
+      <div className="transactions-container">
+        Transactions go here!
+        <div>Total transactions: {transactionsCount}</div>
+      </div>
 
       {transactions.length > 0 && (
         transactions.map((transaction, index) => (
