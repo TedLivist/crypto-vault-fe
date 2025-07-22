@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
+import "../styling/RequestWithdrawal.css"
 
 const RequestWithdrawal = (props) => {
   const { isOpen, handleModal, contract } = props;
@@ -41,46 +42,52 @@ const RequestWithdrawal = (props) => {
       console.error(e.reason)
       setError(e.reason)
     }
-
+    
   }
-
+  
   return (
     <>
       {isOpen && (
-        <div>
-          <div>
-            <h2>Modal title</h2>
-            <form onSubmit={handleSubmit}>
-              <label htmlFor="recipient">Recipient</label>
-              <input
-                type="text" name="recipient"
-                value={recipientAddress}
-                onChange={(e) => setRecipientAddress(e.target.value)}
-                placeholder="Enter recipient address"
-                required
-              />
+        <div className="modal-overlay">
+          <div className="modal-container">
+            <div className="modal-header">
+              <h2 className="modal-title">Modal title</h2>
+              <button className="modal-close" onClick={handleModal}>x</button>
+            </div>
+            <div className="modal-content">
+              <form className="modal-form" onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label className="form-label" htmlFor="recipient">Recipient</label>
+                  <input
+                    className="form-input"
+                    type="text" name="recipient"
+                    value={recipientAddress}
+                    onChange={(e) => setRecipientAddress(e.target.value)}
+                    placeholder="Enter recipient address"
+                    required
+                  />
+                </div>
 
-              <br />
-              <label htmlFor="txValue">ETH amount</label>
-              <input
-                type="number" name="txValue"
-                value={txValue}
-                onChange={(e) => setTxValue(e.target.value)}
-                placeholder="Enter amount of ETH to withdraw"
-                required
-              />
+                <div className="form-group">
+                  <label className="form-label" htmlFor="txValue">ETH amount</label>
+                  <input
+                    className="form-input"
+                    type="number" name="txValue"
+                    value={txValue}
+                    onChange={(e) => setTxValue(e.target.value)}
+                    placeholder="Enter amount of ETH to withdraw"
+                    required
+                  />
+                </div>
 
-              <br />
-              <button>Queue withdrawal</button>
-              {(error) && (
-                <p style={{color: 'red'}}>{error}</p>
-              )}
-            </form>
-
-            <button onClick={handleModal}>xx</button>
+                {(error) && (
+                  <p className="error-message">{error}</p>
+                )}
+                <button className="form-submit">Queue withdrawal</button>
+              </form>
+            </div>
           </div>
         </div>
-
       )}
     </>
   );
