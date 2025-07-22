@@ -9,6 +9,8 @@ const Transactions = () => {
   const [transactionsCount, setTransactionsCount] = useState(0)
 
   useEffect(() => {
+    if(!contract) return // don't run useEffect if contract isn't set
+
     const handleTransactions = async () => {
       const allTxs = await contract.getTransactions()
       setTransactions(allTxs)

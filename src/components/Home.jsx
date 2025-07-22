@@ -14,6 +14,8 @@ const Home = (props) => {
 
   useEffect(() => {
     const initializeVariables = async () => {
+      if(!contract) return // don't run useEffect if contract isn't set
+
       const cont = Number(await contract.lastWithdrawal());
       const time = (timeDiff(Date.now(), (cont * 1000)))
       setLastWithdrawal(time);

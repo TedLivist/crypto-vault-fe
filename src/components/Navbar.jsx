@@ -8,7 +8,7 @@ const Navbar = () => {
 
   return (
     <div className="navbar-wrapper">
-      I am navbar
+      Crypto Vault
       <NavLink to="/" className="nav-link">Homepage</NavLink>
       <NavLink to="/transactions" className="nav-link">Transactions</NavLink>
       {signer.address && (
