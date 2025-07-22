@@ -16,23 +16,23 @@ function App() {
   const [signer, setSigner] = useState("")
   const [contract, setContract] = useState("")
 
-  useEffect(() => {
-    const connectWallet = async () => {
-      await provider.send("eth_requestAccounts", []);
+  const connectWallet = async () => {
+    await provider.send("eth_requestAccounts", []);
 
-      const initSigner = await provider.getSigner();
-      setSigner(initSigner)
-      setContract(new ethers.Contract(contractAddress, contractABI, initSigner));
+    const initSigner = await provider.getSigner();
+    setSigner(initSigner)
+    setContract(new ethers.Contract(contractAddress, contractABI, initSigner));
 
-      const chainId = await window.ethereum.request({ method: 'eth_chainId' })
-      if (chainId !== '0xaa36a7') { // Sepolia's chainId
-        await window.ethereum.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: '0xaa36a7' }]
-        })
-      }
+    const chainId = await window.ethereum.request({ method: 'eth_chainId' })
+    if (chainId !== '0xaa36a7') { // Sepolia's chainId
+      await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0xaa36a7' }]
+      })
     }
+  }
 
+  useEffect(() => {
     connectWallet()
   }, [])
 
@@ -61,9 +61,15 @@ function App() {
     }
   }, []);
 
+  
+  const disconnectWallet = () => {
+    setContract("")
+    setSigner("")
+  }
+
   const webContextValue = useMemo(() => 
-    ({ contract, signer }),
-    [contract, signer]
+    ({ contract, signer, disconnectWallet, connectWallet }),
+    [contract, signer, disconnectWallet, connectWallet]
   )
   
   return (

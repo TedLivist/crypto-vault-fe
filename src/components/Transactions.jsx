@@ -9,6 +9,8 @@ const Transactions = () => {
   const [transactionsCount, setTransactionsCount] = useState(0)
 
   useEffect(() => {
+    if(!contract) return // don't run useEffect if contract isn't set
+
     const handleTransactions = async () => {
       const allTxs = await contract.getTransactions()
       setTransactions(allTxs)
@@ -23,8 +25,10 @@ const Transactions = () => {
 
   return (
     <>
-      Transactions go here!
-      <div>Total transactions: {transactionsCount}</div>
+      <div className="transactions-container">
+        Transactions go here!
+        <div>Total transactions: {transactionsCount}</div>
+      </div>
 
       {transactions.length > 0 && (
         transactions.map((transaction, index) => (
